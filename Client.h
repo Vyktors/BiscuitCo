@@ -13,14 +13,14 @@ using namespace std;
 		string nom_client;
 		int numero;
 		string rue;
-		Liste<Commande> listeCommande;
+		Liste<Commande> * listeCommande;
 
 	public:
 		Client();
 		Client(string _nom_client, int _numero, string _rue);
 		~Client();
 
-		void ajouterCommande(Commande _commande);
+		void ajouterCommande(Commande& _commande);
 		void afficher();
 		string nom();
 };

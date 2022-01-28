@@ -8,22 +8,19 @@ Paquet::Paquet()
 
 }
 
-
 Paquet::Paquet(const TypeBiscuit& pTypeBiscuit, int _quantite)
 {
 	biscuit = pTypeBiscuit;
 	quantite = _quantite;
 }
 
-
-
-
 Paquet::~Paquet()
 {
 }
 
-void Paquet::afficher()
+string Paquet::afficher()
 {
-	cout << "Paquet : " << biscuit.nom << " " << quantite << endl;
+	string s = "Paquet : " + biscuit.nom + " " + to_string(quantite);
+	return s;
 }
 

@@ -15,5 +15,5 @@ class Paquet {
 		Paquet(const TypeBiscuit& _biscuit, int _quantite);
 		~Paquet();
 
-		void afficher();
+		string afficher();
 };

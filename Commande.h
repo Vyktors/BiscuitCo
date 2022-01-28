@@ -11,7 +11,7 @@ class Commande {
 	private :
 		string client_source;
 		string client_destinataire;
-		Liste<Paquet> listePaquet;
+		Liste<Paquet> * listePaquet;
 	public :
 		Commande();
 		Commande(string _client_source, string _client_destinataire);
