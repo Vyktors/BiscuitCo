@@ -1,7 +1,8 @@
 #pragma once
+#include <cassert>
 
 #include "Noeud.h"
-#include <cassert>
+
 
 template<typename TElement>
 class Liste {
@@ -27,7 +28,11 @@ private:
 	noeud<TElement> * Tete; // position du premier élément
 	noeud<TElement> * Queue; // position du dernier élément
 	noeud<TElement> * Courant; // position de l'élément courant
+
+	
 };
+
+
 
 // Constructeur
 template<typename TElement> inline
@@ -166,3 +171,4 @@ bool Liste<TElement>::Trouver(const TElement& valeur) { // recherche la valeur à
 			Courant = Courant->Suivant;
 	return false;
 }
+
