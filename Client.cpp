@@ -37,8 +37,8 @@ void Client::afficher()
 	cout << "Liste de commandes :" << endl;
 	for (listeCommande->FixerTete(); listeCommande->EstDansListe(); listeCommande->Suivant())
 	{
-		cout << "--------------" << endl;
 		listeCommande->ValeurCourante().afficher();
+		cout << "--------------" << endl;
 	}
 }
 
