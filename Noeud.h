@@ -1,27 +1,36 @@
 #pragma once
 
 
-template<typename TElement>
-class noeud {
+template<typename TType>
+
+class Noeud {
 public:
-	TElement element;
-	noeud<TElement> * Suivant;
-	noeud(const TElement& info, noeud<TElement> * suiv = nullptr);
-	noeud(noeud<TElement> *  suiv = nullptr);
-	~noeud();
-}; 
+	TType info;
+	Noeud<TType>* Suivant;
 
-template<typename TElement> inline
-noeud<TElement>::noeud(const TElement& info, noeud<TElement> * suiv) { 
-	element = info;
+	Noeud();
+	Noeud(const TType& _info, Noeud<TType>* suiv = nullptr);
+	Noeud(Noeud<TType>* suiv);
+	~Noeud();
+};
+
+template<typename TType> inline
+Noeud<TType>::Noeud() {
+	Suivant = nullptr;
+}
+
+template<typename TType> inline
+Noeud<TType>::Noeud(const TType& _info, Noeud<TType>* suiv) {
+	info = _info;
 	Suivant = suiv;
 }
 
-template<typename TElement> inline
-noeud<TElement>::noeud(noeud<TElement> * suiv ) { 
+template<typename TType> inline
+Noeud<TType>::Noeud(Noeud<TType>* suiv) {
+	info = TType();
 	Suivant = suiv;
 }
 
-template<typename TElement> inline
-noeud<TElement>::~noeud() {
+template<typename TType> inline
+Noeud<TType>::~Noeud() {
 }

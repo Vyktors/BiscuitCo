@@ -7,13 +7,14 @@
 using namespace std;
 
 class Paquet {
-	private :
-		TypeBiscuit biscuit;
-		int quantite;
-	public : 
-		Paquet();
-		Paquet(const TypeBiscuit& _biscuit, int _quantite);
-		~Paquet();
+private:
+	TypeBiscuit biscuit;
+	int quantite;
 
-		string afficher();
+public:
+	Paquet();
+	Paquet(const TypeBiscuit& _biscuit, int _quantite);
+	~Paquet();
+
+	string afficher();
 };

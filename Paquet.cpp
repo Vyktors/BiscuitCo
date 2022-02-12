@@ -3,9 +3,7 @@
 
 Paquet::Paquet()
 {
-	biscuit = TypeBiscuit("");
 	quantite = 0; 
-
 }
 
 Paquet::Paquet(const TypeBiscuit& pTypeBiscuit, int _quantite)
@@ -16,6 +14,7 @@ Paquet::Paquet(const TypeBiscuit& pTypeBiscuit, int _quantite)
 
 Paquet::~Paquet()
 {
+
 }
 
 string Paquet::afficher()

@@ -1,5 +1,5 @@
 #include "TypeBiscuit.h"
-
+#include <string>
 TypeBiscuit::TypeBiscuit()
 {
 	nom = "";

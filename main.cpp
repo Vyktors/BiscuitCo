@@ -4,34 +4,32 @@
 #include "Client.h"
 #include "Paquet.h"
 #include "Commande.h"
-
+#include "Usine.h"
 
 using namespace std;
 
 
 int main()
 {
-
-	Client Vic("Vic",25,"Quinn");
-	Client Sophie("Sophie", 5468, "Lalancette");
-
 	const TypeBiscuit CHOCOLAT("Chocolat");
 	const TypeBiscuit MACADAM("Macadam");
-	const TypeBiscuit NOIX("Noix"); 
-	
-	Paquet p1(CHOCOLAT, 45);
-	Paquet p2(MACADAM, 21);
-	Paquet p3(NOIX, 5);
-	
-	Commande c(Vic.nom(), Sophie.nom());
-	c.ajouterPaquet(p1);
-	c.ajouterPaquet(p2);
-	c.ajouterPaquet(p3);
-	
-	Vic.ajouterCommande(c);
+	const TypeBiscuit NOIX("Noix");
 
-	Vic.afficher();
-	Sophie.afficher();
+	//Liste de INT ça fonctionne! 
+	Liste<int> listeINt;
+	listeINt.InsererQueue(4);
+	listeINt.InsererQueue(5);
+
+	//Liste de Paquet ça fonctionne! 
+	Liste<Paquet> listeP;
+	Paquet p1 = Paquet(CHOCOLAT, 20);
+	Paquet p2 = Paquet(MACADAM, 22);
+	listeP.InsererQueue(p1);
+	listeP.InsererQueue(p2);
+
+	//Liste de Commande(Liste de liste), fonctionne pas :(
+	Liste<Commande> listeCo;
+
 
 	system("pause");
 	return 0;
