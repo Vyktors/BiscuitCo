@@ -1,38 +1,38 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "Liste.h"
 #include "Client.h"
 #include "Paquet.h"
 #include "Commande.h"
-
+#include "Usine.h"
 
 using namespace std;
 
 
+//Création des Types
+const TypeBiscuit CHOCOLAT("Chocolat");
+const TypeBiscuit MACADAM("Macadam");
+const TypeBiscuit NOIX("Noix");
+
 int main()
 {
+	//Liste de Paquet ça fonctionne à moitié! Le destucteur est appelé deux fois? 
 
-	Client Vic("Vic",25,"Quinn");
-	Client Sophie("Sophie", 5468, "Lalancette");
+	//Liste<Paquet> listeP;
+	Paquet p1(CHOCOLAT, 20);
+	//Paquet p2(MACADAM, 22);
+	//listeP.InsererQueue(p1);
+	//listeP.InsererQueue(p2);
 
-	const TypeBiscuit CHOCOLAT("Chocolat");
-	const TypeBiscuit MACADAM("Macadam");
-	const TypeBiscuit NOIX("Noix"); 
-	
-	Paquet p1(CHOCOLAT, 45);
-	Paquet p2(MACADAM, 21);
-	Paquet p3(NOIX, 5);
-	
-	Commande c(Vic.nom(), Sophie.nom());
-	c.ajouterPaquet(p1);
-	c.ajouterPaquet(p2);
-	c.ajouterPaquet(p3);
-	
-	Vic.ajouterCommande(c);
 
-	Vic.afficher();
-	Sophie.afficher();
+	//Liste de Commande(Liste de liste), fonctionne pas :(
+	Liste<Commande> listeCo;
+	Commande co1;
+	co1.ajouterPaquet(p1);
+	listeCo.InsererQueue(co1);
 
-	system("pause");
+	//system("pause");
 	return 0;
 }
+
