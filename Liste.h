@@ -1,12 +1,15 @@
 #pragma once
-
+#include <iostream>
 #include "Noeud.h"
-#include <cassert>
+using namespace std;
 
 template<typename TElement>
 class Liste {
 public:
 	Liste(); // Constructeur
+	Liste<TElement> &operator=(const Liste<TElement>& copied);
+
+
 	~Liste(); // Destructeur
 	void ViderListe(); // Vide la liste
 	void Inserer(const TElement&); // insère un élément à la position courante
@@ -23,23 +26,44 @@ public:
 	bool EstDansListe() const; // retourne vrai si position courante est dans la liste
 	bool Trouver(const TElement&);// recherche une valeurs dans la
 								   // liste à partir de la position courante.
+	
 private:
-	noeud<TElement> * Tete; // position du premier élément
-	noeud<TElement> * Queue; // position du dernier élément
-	noeud<TElement> * Courant; // position de l'élément courant
+	Noeud<TElement> * Tete; // position du premier élément
+	Noeud<TElement> * Queue; // position du dernier élément
+	Noeud<TElement> * Courant; // position de l'élément courant
 };
+
+
 
 // Constructeur
 template<typename TElement> inline
 Liste<TElement>::Liste()
 {
-	Queue = Tete = Courant = new noeud<TElement>(); // crée le noeud entête
+	cout << "Creation Liste sans paramètre" << endl;
+	Queue = Tete = Courant = new Noeud<TElement>(); // crée le Noeud entête
+}
+
+
+template<typename TElement> inline 
+Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied)
+{
+
+	cout << "Copie référence!!" << endl;
+	Noeud<TElement>* courantTmp = copied.Tete;
+	while (courantTmp->Suivant != nullptr) {
+		this->InsererQueue(courantTmp->Suivant->info);
+		courantTmp = courantTmp->Suivant;
+	}
+	
+
+	return *this;
 }
 
 // Destructeur
 template<typename TElement> inline
 Liste<TElement>::~Liste()
 {
+	cout << "Destruction Liste" << endl;
 	while (Tete != nullptr) {
 		Courant = Tete;
 		Tete = Tete->Suivant;
@@ -47,7 +71,7 @@ Liste<TElement>::~Liste()
 	}
 }
 
-// libère l'espace alloué aux noeuds, garde l'entête.
+// libère l'espace alloué aux Noeuds, garde l'entête.
 template<typename TElement>
 void Liste<TElement>::ViderListe()
 {
@@ -63,9 +87,8 @@ void Liste<TElement>::ViderListe()
 template<typename TElement>
 void Liste<TElement>::Inserer(const TElement& element)
 {
-	assert(Courant != nullptr);// s'assure que Courant pointe vers un noeud
 
-	Courant->Suivant = new noeud<TElement>(element, Courant->Suivant);
+	Courant->Suivant = new Noeud<TElement>(element, Courant->Suivant);
 	if (Queue == Courant)
 		Queue = Courant->Suivant; //l'élément est ajouté à la fin de la liste.
 }
@@ -76,7 +99,7 @@ TElement Liste<TElement>::Supprimer()
 {
 	assert(EstDansListe());// Courant doit être une position valide sinon le programme se termine
 	TElement temp = Courant->Suivant->element; //Sauvegarde de l'élément courant
-	noeud<TElement> * ptemp = Courant->Suivant; // Sauvegarde du pointeur du noeud Courant
+	Noeud<TElement> * ptemp = Courant->Suivant; // Sauvegarde du pointeur du Noeud Courant
 	Courant->Suivant = ptemp->Suivant; // suppression de l'élément
 	if (Queue == ptemp)
 		Queue = Courant; // C'est le dernier élément supprimé, mise à jour de Queue
@@ -86,9 +109,9 @@ TElement Liste<TElement>::Supprimer()
 
 // insère en fin de liste
 template<typename TElement>
-void Liste<TElement>::InsererQueue(const TElement& element)
+void Liste<TElement>::InsererQueue(const TElement& _info)
 {
-	Queue = Queue->Suivant = new noeud<TElement>(element, nullptr);
+	Queue = Queue->Suivant = new Noeud<TElement>(_info, nullptr);
 }
 
 // rend la tête comme position courante
@@ -100,7 +123,7 @@ void Liste<TElement>::FixerTete() {
 // met la position courante à la position précédente
 template<typename TElement>
 void Liste<TElement>::Precedent() {
-	noeud<TElement> * temp = Tete;
+	Noeud<TElement> * temp = Tete;
 	if ((Courant == nullptr) || (Courant == Tete)) // pas d'élément précédent
 	{
 		Courant = nullptr;
@@ -121,7 +144,7 @@ void Liste<TElement>::Suivant() {
 template<typename TElement>
 int Liste<TElement>::Longueur() const {
 	int cpt = 0;
-	for (noeud<TElement> * temp = Tete->Suivant; temp != nullptr; temp = temp->Suivant)
+	for (Noeud<TElement> * temp = Tete->Suivant; temp != nullptr; temp = temp->Suivant)
 		cpt++;
 	return cpt;
 }
@@ -135,15 +158,18 @@ void Liste<TElement>::FixerPosition(const int pos) {
 
 template<typename TElement>
 void Liste<TElement>::FixerValeur(const TElement& valeur) {
-	assert(EstDansListe());
-	Courant->Suivant->element = valeur;
-	return;
+	if (EstDansListe()) {
+		Courant->Suivant->info = valeur;
+	}
 }
 
 template<typename TElement>
 TElement Liste<TElement>::ValeurCourante() const {
-	assert(EstDansListe());
-	return Courant->Suivant->element;
+	if (EstDansListe()) {
+		return Courant->Suivant->info;
+	}	
+	
+	return TElement();
 }
 
 template<typename TElement>
@@ -160,9 +186,10 @@ template<typename TElement>
 bool Liste<TElement>::Trouver(const TElement& valeur) { // recherche la valeur à partir
 											   // de la position courante
 	while (EstDansListe())
-		if (Courant->Suivant->element == valeur)
+		if (Courant->Suivant->info == valeur)
 			return true;
 		else
 			Courant = Courant->Suivant;
 	return false;
 }
+
