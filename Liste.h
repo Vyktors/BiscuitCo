@@ -1,5 +1,9 @@
 #pragma once
+<<<<<<< HEAD
 #include <iostream>
+=======
+
+>>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 #include "Noeud.h"
 using namespace std;
 
@@ -27,7 +31,10 @@ public:
 	bool EstDansListe() const; // retourne vrai si position courante est dans la liste
 	bool Trouver(const TElement&);// recherche une valeurs dans la
 								   // liste à partir de la position courante.
+<<<<<<< HEAD
 	
+=======
+>>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 private:
 	Noeud<TElement> * Tete; // position du premier élément
 	Noeud<TElement> * Queue; // position du dernier élément
@@ -40,6 +47,7 @@ private:
 template<typename TElement> inline
 Liste<TElement>::Liste()
 {
+<<<<<<< HEAD
 	cout << "Creation Liste sans paramètre" << endl;
 	Queue = Tete = Courant = new Noeud<TElement>(); // crée le Noeud entête
 }
@@ -51,6 +59,9 @@ inline Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied
 	cout << "passage d'une liste" << endl;
 	Liste<TElement> cop = copied;
 	return cop;
+=======
+	Queue = Tete = Courant = new Noeud<TElement>(); // crée le Noeud entête
+>>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 }
 
 // Destructeur

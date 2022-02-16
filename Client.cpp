@@ -19,7 +19,11 @@ Client::Client(string _nom_client, int _numero, string _rue)
 
 Client::~Client()
 {
+<<<<<<< HEAD
 	
+=======
+	listeCommande.~Liste();
+>>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 }
 
 void Client::ajouterCommande(Commande& _commande)

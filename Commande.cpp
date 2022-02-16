@@ -17,7 +17,11 @@ Commande::Commande(string _client_source, string _client_destinataire)
 
 Commande::~Commande()
 {
+<<<<<<< HEAD
 
+=======
+	listePaquet.~Liste();
+>>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 }
 
 void Commande::ajouterPaquet(Paquet& _paquet)
