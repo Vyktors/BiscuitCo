@@ -7,7 +7,7 @@ template<typename TElement>
 class Liste {
 public:
 	Liste(); // Constructeur
-	Liste &operator=(const Liste<TElement>& copied);
+	Liste<TElement> &operator=(const Liste<TElement>& copied);
 
 
 	~Liste(); // Destructeur
@@ -44,12 +44,19 @@ Liste<TElement>::Liste()
 }
 
 
-template<typename TElement>
-inline Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied)
+template<typename TElement> inline 
+Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied)
 {
-	cout << "passage d'une liste" << endl;
-	Liste<TElement> cop = copied;
-	return cop;
+
+	cout << "Copie référence!!" << endl;
+	Noeud<TElement>* courantTmp = copied.Tete;
+	while (courantTmp->Suivant != nullptr) {
+		this->InsererQueue(courantTmp->Suivant->info);
+		courantTmp = courantTmp->Suivant;
+	}
+	
+
+	return *this;
 }
 
 // Destructeur

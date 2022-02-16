@@ -33,7 +33,7 @@ int main()
 	co1.ajouterPaquet(p1);
 	listeCo.InsererQueue(co1);
 
-	//system("pause");
+	system("pause");
 
 	return 0;
 }
