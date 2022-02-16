@@ -3,10 +3,7 @@
 
 Paquet::Paquet()
 {
-<<<<<<< HEAD
 	cout << "Creation paquet sans paramètre" << endl;
-=======
->>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 	quantite = 0; 
 }
 
@@ -19,11 +16,7 @@ Paquet::Paquet(const TypeBiscuit& pTypeBiscuit, int _quantite)
 
 Paquet::~Paquet()
 {
-<<<<<<< HEAD
 	cout << "Destruction Paquet" << endl;
-=======
-
->>>>>>> b51fa1f5e600e5027e3983b3866e35e8c7f645b1
 }
 
 string Paquet::afficher()
