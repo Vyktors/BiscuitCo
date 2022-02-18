@@ -2,19 +2,23 @@
 #include <iostream>
 #include <string>
 
-#include "TypeBiscuit.h"
-
 using namespace std;
 
 class Paquet {
 private:
-	TypeBiscuit biscuit;
+	string biscuit;
 	int quantite;
 
 public:
+	
+
 	Paquet();
-	Paquet(const TypeBiscuit& _biscuit, int _quantite);
+	Paquet(string _biscuit, int _quantite);
 	~Paquet();
 
 	string afficher();
+	void setQt(int nbr);
+	void ajouterQt(int nbr);
+	int getQt();
+	string getNom();
 };
