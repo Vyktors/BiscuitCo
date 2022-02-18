@@ -44,4 +44,30 @@ string Commande::getCliDest()
 	return client_destinataire;
 }
 
+Liste<Paquet>& Commande::getPaquets()
+{
+	return listePaquet;
+}
+
+void Commande::metAJourQtTotal(Liste<Paquet>& listePUsine)
+{
+	bool dejaLa;
+	for (listePaquet.FixerTete(); listePaquet.EstDansListe(); listePaquet.Suivant())
+	{
+		dejaLa = false;
+		for (listePUsine.FixerTete(); listePUsine.EstDansListe(); listePUsine.Suivant())
+		{
+			if (listePaquet.ValeurCourante().getNom() == listePUsine.ValeurCourante().getNom()) {
+				dejaLa = true;
+				listePUsine.ValeurCourante().ajouterQt(listePaquet.ValeurCourante().getQt());
+			}
+		}
+		if (!dejaLa) {
+			listePUsine.InsererQueue(listePaquet.ValeurCourante());
+		}
+	}
+}
+
+
+
 

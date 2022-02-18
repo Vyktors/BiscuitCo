@@ -19,6 +19,7 @@ public:
 	void afficher();
 	void setQt(int nbr);
 	void ajouterQt(int nbr);
+	void retirerQt(int nbr);
 	int getQt();
 	string getNom();
 };

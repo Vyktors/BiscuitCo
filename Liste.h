@@ -14,7 +14,7 @@ public:
 	void ViderListe(); // Vide la liste
 	void Inserer(const TElement&); // insère un élément à la position courante
 	void InsererQueue(const TElement&); // insère un élément à la fin de la liste
-	void Supprimer(); // Supprime et retourne l'élément à la position courante
+	TElement Supprimer(); // Supprime et retourne l'élément à la position courante
 	void FixerTete(); // met la position courante à la tête de la liste
 	void Precedent(); // Déplace la position courante à la position précédente
 	void Suivant(); // Déplace la position courante à la position suivante
@@ -103,7 +103,7 @@ void Liste<TElement>::Inserer(const TElement& element)
 
 // supprime et retourne l'élément courant
 template<typename TElement>
-void Liste<TElement>::Supprimer()
+TElement Liste<TElement>::Supprimer()
 {
 	if (EstDansListe()) { // Courant doit être une position valide sinon le programme se termine
 		TElement temp = Courant->Suivant->info; //Sauvegarde de l'élément courant
@@ -112,7 +112,9 @@ void Liste<TElement>::Supprimer()
 		if (Queue == ptemp)
 			Queue = Courant; // C'est le dernier élément supprimé, mise à jour de Queue
 		delete ptemp;
+		return temp;
 	}	
+	
 }
 
 // insère en fin de liste

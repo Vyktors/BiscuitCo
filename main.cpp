@@ -17,6 +17,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
+
 #include "Liste.h"
 #include "Client.h"
 #include "Paquet.h"
@@ -35,17 +37,67 @@ void ouvrir(string);
 void ouvrirClient(string _nomFichierClient);
 void ouvrirCommande(string _nomFichierClient);
 void enregistrer(string);
+void enregistrerClient(string);
+void enregistrerCommande(string);
+void viderFichier(string nomFichier);
 
 int main()
 {
+	setlocale(LC_CTYPE, "Fr-FR");
+
 	cout << "Bienvenue a l'usine de Biscuit! " << endl;
-	string instruction;
 	while (true) {
-		cout << "Entrez une operation : ";
-		getline(cin, instruction);
-		gereChoix(instruction);
-		cout << endl;
+		cout << "Voulez vous entrer des transactions " << endl;
+		cout << setw(10) << "A  "  << "MANUEL" <<  endl;
+		cout << setw(10) << "B  "  << "À PARTIR D'UN FICHIER" <<  endl;
+		string choix, instruction;
+		cout << "Choix (A ou B) : ";
+		getline(cin, choix);
+
+		if (choix == "A") {
+			while (true) {
+				cout << "Entrez une operation : ";
+				getline(cin, instruction);
+				if (instruction == "Q" || instruction == "exit") {
+					break;
+				}
+				gereChoix(instruction);
+				cout << endl;
+			}
+		}
+		else if (choix == "B") {
+			string NomFichier;
+			ifstream FicEntree;
+
+			while (true) {
+				cout << "Entrez un fichier opération: ";
+				getline(cin, NomFichier);
+				if (NomFichier == "Q" || NomFichier == "exit") {
+					break;
+				}
+				FicEntree.open(NomFichier, ios::in);
+				if (!FicEntree)
+				{
+					cout << "Erreur de lecture du fichier des operation";
+					FicEntree.close();
+				}
+				else
+				{
+					while (!FicEntree.eof())
+					{
+						getline(FicEntree, instruction);
+						gereChoix(instruction);
+						cout << endl;
+					}
+					FicEntree.close();
+				}
+			}
+		}
+		else {
+			cout << "Choisissez entre A et B!";
+		}
 	}
+
 	system("pause");
 
 	return 0;
@@ -77,14 +129,26 @@ void gereChoix(string s)
 		ouvrir(s);
 		break;
 	case 'S'://enregistre dans les fichiers ""CLIENTS"" et "" COMMANDES"
-
+		enregistrer(s);
 		break;
-
 	case 'X'://Afficher tous les clients
 		usine.afficherClients();
 		break;
+	case 'H'://Lit fichier de transactions
+		cout << "• - X : Supprimer un client X ainsi que toutes ses commandes associées de la liste." << endl;
+		cout << " + C N A : Ajouter un client C habitant à l'adresse A et au numéro N à la liste chaînée." << endl;
+		cout << " = X Y B1 X1[...] BN XN & : Ajouter une commande du client X au client Y suivie des types B" << endl;
+		cout << "    de biscuits et de leur quantité X. '&' indique la fin de la commande." << endl;
+		cout << " ? X : Afficher les commandes faites par un client X." << endl;
+		cout << " $ : Afficher le type de biscuit le plus populaire et le montant total reçu pour ce dernier." << endl;
+		cout << " O CLIENTS COMMANDES : ouvre et charge les fichiers 'CLIENTS' et 'COMMANDES'." << endl;
+		cout << " S CLIENTS COMMANDES : enregistre dans les fichiers 'CLIENTS' et 'COMMANDES'." << endl;
+		cout << " X : Affiche TOUS les clients et leurs commandes" << endl;
+		cout << " H : Affiche les transactions disponibles et leur détails" << endl;
+
+		break;
 	default:
-		cout << "Ceci n'est pas une commande, voir commande 'help' pour plus d'information" << endl;
+		cout << "Ceci n'est pas une commande, voir commande 'H' (help) pour plus d'information" << endl;
 		break;
 	}
 }
@@ -153,7 +217,7 @@ void ajouterCommande(string s) {
 		}
 		s.erase(0, pos + 1);
 	}
-	if (usine.checkClient(cliS) && usine.checkClient(cliD)) {
+	if (usine.checkClient(cliS) && usine.checkClient(cliD)) { 
 		Commande commande(cliS, cliD);
 		int mod = 0;
 		string biscuit;
@@ -278,4 +342,100 @@ void ouvrirCommande(string _nomFichierCommande) {
 	else {
 		cout << "pas trouver de fichier avec ce nom " << _nomFichierCommande << endl;
 	}
+}
+
+void enregistrer(string s) {
+	size_t pos = 0;
+	string token, nomFichierClient = "", nomFichierCommande = "";
+	int no;
+	for (size_t i = 0; i < 2; i++)
+	{
+		pos = s.find(" ");
+		token = s.substr(0, pos);
+
+		switch (i)
+		{
+		case 0:
+			nomFichierClient = token;
+			break;
+		case 1:
+			nomFichierCommande = token;
+			break;
+		default:
+			break;
+		}
+		s.erase(0, pos + 1);
+	}
+
+	enregistrerClient(nomFichierClient);
+	enregistrerCommande(nomFichierCommande);
+}
+
+void enregistrerClient(string _nomFichierClient) {
+	viderFichier(_nomFichierClient);
+
+	ofstream sortie;
+	sortie.open(_nomFichierClient, ios::out);
+	if (sortie) {
+		//Imprimer client
+		Liste<Client> listeClients = usine.getClients();
+		for (listeClients.FixerTete(); listeClients.EstDansListe(); listeClients.Suivant())
+		{
+			sortie << listeClients.ValeurCourante().getNom() << endl;
+			sortie << listeClients.ValeurCourante().getNo() << endl;
+			sortie << listeClients.ValeurCourante().getAdresse() << endl;	
+		}
+
+	}
+	else {
+		cout << "pas trouver de fichier avec ce nom " << _nomFichierClient << endl;
+	}
+		sortie.close();
+
+}
+
+void enregistrerCommande(string _nomFichierCommande) {
+	viderFichier(_nomFichierCommande);
+
+	ofstream sortie;
+	sortie.open(_nomFichierCommande, ios::out);
+	if (sortie) {
+		//Imprimer client
+		Liste<Client> listeClients = usine.getClients();
+		for (listeClients.FixerTete(); listeClients.EstDansListe(); listeClients.Suivant())
+		{
+			//Chaque CLient
+			Liste<Commande> listeCommandeClient = listeClients.ValeurCourante().getCommandes();
+
+			for (listeCommandeClient.FixerTete(); listeCommandeClient.EstDansListe(); listeCommandeClient.Suivant())
+			{
+				//Chaque Commande
+				sortie << listeCommandeClient.ValeurCourante().getCliSource() << endl;
+				sortie << listeCommandeClient.ValeurCourante().getCliDest() << endl;
+				
+				Liste<Paquet> listePaquets = listeCommandeClient.ValeurCourante().getPaquets();
+
+				for (listePaquets.FixerTete(); listePaquets.EstDansListe(); listePaquets.Suivant())
+				{
+					sortie << listePaquets.ValeurCourante().getNom() << " ";
+					sortie << listePaquets.ValeurCourante().getQt() << endl;
+				}
+				sortie << "&" << endl;
+			}
+			
+		}
+
+	}
+	else {
+		cout << "pas trouver de fichier avec ce nom " << _nomFichierCommande << endl;
+	}
+	sortie.close();
+
+
+}
+
+void viderFichier(string nomFichier) {
+	std::ofstream ofs;
+	ofs.open("nomFichier", std::ofstream::out | std::ofstream::trunc);
+	ofs.close();
 }

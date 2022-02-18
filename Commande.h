@@ -21,4 +21,6 @@ class Commande {
 		void afficher();
 		string getCliSource();
 		string getCliDest();
+		Liste<Paquet>& getPaquets();
+		void metAJourQtTotal(Liste<Paquet>&);
 };

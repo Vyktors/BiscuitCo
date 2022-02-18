@@ -27,6 +27,10 @@ void Paquet::ajouterQt(int nbr) {
 	quantite = quantite + nbr;
 }
 
+void Paquet::retirerQt(int nbr) {
+	quantite = quantite - nbr;
+}
+
 void Paquet::setQt(int nbr) {
 	quantite = nbr;
 }

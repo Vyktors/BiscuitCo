@@ -41,17 +41,48 @@ void Client::afficher()
 	}
 }
 
-void Client::supprimerCommandes(string cli)
+Liste<Commande> Client::supprimerCommandes(string cli)
 {
+	Liste<Commande> listeCoSupprime;
 	for (listeCommande.FixerTete(); listeCommande.EstDansListe(); listeCommande.Suivant())
 	{
 		if (listeCommande.ValeurCourante().getCliSource() == cli  || listeCommande.ValeurCourante().getCliDest() == cli) {
-			listeCommande.Supprimer();
+			listeCoSupprime.InsererQueue(listeCommande.Supprimer());
 		}
 	}
+	return listeCoSupprime;
 }
 
-string Client::nom()
+int Client::getNo()
+{
+	return numero;
+}
+
+string Client::getAdresse()
+{
+	return rue;
+}
+
+Liste<Commande>& Client::getCommandes()
+{
+	return listeCommande;
+}
+
+void Client::metAJourQtTotal(Liste<Paquet>& listeP)
+{
+	for (listeCommande.FixerTete(); listeCommande.EstDansListe(); listeCommande.Suivant())
+	{
+		listeCommande.ValeurCourante().metAJourQtTotal(listeP);
+		
+	}
+
+}
+
+string Client::getNom()
 {
 	return nom_client;
 }
+
+
+
+

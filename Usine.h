@@ -25,7 +25,9 @@ public :
 	bool checkClient(string);
 	void ajouterCommandeToClient(string nomCli, const Commande&);
 	void ajouterPaquet(Paquet&);
+	void supprimerPaquet(Paquet&);
 	void afficherPaquetPopulaire();
 	void supprimerClient(string);
 	void supprimerCommandesAvecClient(string);
+	Liste<Client>& getClients();
 };

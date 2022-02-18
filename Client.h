@@ -22,6 +22,10 @@ using namespace std;
 
 		void ajouterCommande(const Commande& _commande);
 		void afficher();
-		void supprimerCommandes(string);
-		string nom();
+		Liste<Commande> supprimerCommandes(string);
+		string getNom();
+		int getNo();
+		string getAdresse();
+		Liste<Commande>& getCommandes();
+		void metAJourQtTotal(Liste<Paquet>&);
 };
