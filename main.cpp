@@ -39,7 +39,7 @@ int main()
 	cout << "Bienvenue a l'usine de Biscuit! " << endl;
 	string instruction;
 	while (true) {
-		cout << "Entrez une operation : ";
+		cout << "Entrez une operation :";
 		getline(cin, instruction);
 		gereChoix(instruction);
 	}
@@ -48,6 +48,7 @@ int main()
 	return 0;
 }
 
+// Action que le programme doit faire en fonction des actions du fichier texte des opérations
 void gereChoix(string s)
 {
 	char operation = s.substr(0, s.find(" "))[0];
@@ -97,7 +98,7 @@ void gereChoix(string s)
 		break;
 	}
 }
-
+//Fonction qui vérifie si le client existe dans la liste et s'il n'existe pas ajout de celui-ci
 void ajouterClient(string s) {
 	size_t pos = 0;
 	string token, nom, addr;
@@ -132,6 +133,7 @@ void ajouterClient(string s) {
 	usine.ajouterClient(Client(nom, no, addr));
 }
 
+// Fonction qui ajoute une commande passer par un client qui existe dans la liste
 void ajouterCommande(string s) {
 	
 	size_t pos = 0;
@@ -184,12 +186,14 @@ void ajouterCommande(string s) {
 	
 }
 
+// Fonction qui affiche un client de la liste
 void afficherCommande(string s) {
 	
 	usine.afficherClient(s);
 
 }
 
+// Ouverture des fichiers textes et lectures de ceux-ci
 void ouvrir(string s) {
 	size_t pos = 0;
 	string token, nomFichierClient, nomFichierCommande;
