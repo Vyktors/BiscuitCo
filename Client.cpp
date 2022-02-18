@@ -33,6 +33,7 @@ void Client::afficher()
 	cout << "Nom : " << nom_client << endl;
 	cout << "Adresse : " << numero << " rue " << rue << endl;
 	cout << "Liste de commandes :" << endl;
+	cout << "--------------" << endl;
 	for (listeCommande.FixerTete(); listeCommande.EstDansListe(); listeCommande.Suivant())
 	{
 		listeCommande.ValeurCourante().afficher();

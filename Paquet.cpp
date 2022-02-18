@@ -1,4 +1,5 @@
 #include "Paquet.h"
+#include <iomanip>
 
 Paquet::Paquet()
 {
@@ -16,10 +17,10 @@ Paquet::~Paquet()
 
 }
 
-string Paquet::afficher()
+void Paquet::afficher()
 {
-	string s = "Paquet : " + biscuit + " " + to_string(quantite);
-	return s;
+	cout << "Paquet : " << setw(20) << biscuit << " " << setw(8) << to_string(quantite) << endl;
+	
 }
 
 void Paquet::ajouterQt(int nbr) {

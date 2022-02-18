@@ -27,9 +27,10 @@ void Commande::ajouterPaquet(const Paquet& _paquet)
 
 void Commande::afficher()
 {
+	cout << "Pour " << client_destinataire << endl;
 	for (listePaquet.FixerTete(); listePaquet.EstDansListe(); listePaquet.Suivant())
 	{
-		cout << listePaquet.ValeurCourante().afficher() << endl;
+		listePaquet.ValeurCourante().afficher();
 	}
 }
 
