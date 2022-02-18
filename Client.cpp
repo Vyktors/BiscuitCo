@@ -22,7 +22,7 @@ Client::~Client()
 
 }
 
-void Client::ajouterCommande(Commande& _commande)
+void Client::ajouterCommande(const Commande& _commande)
 {
 	listeCommande.InsererQueue(_commande);
 }
@@ -37,6 +37,16 @@ void Client::afficher()
 	{
 		listeCommande.ValeurCourante().afficher();
 		cout << "--------------" << endl;
+	}
+}
+
+void Client::supprimerCommandes(string cli)
+{
+	for (listeCommande.FixerTete(); listeCommande.EstDansListe(); listeCommande.Suivant())
+	{
+		if (listeCommande.ValeurCourante().getCliSource() == cli  || listeCommande.ValeurCourante().getCliDest() == cli) {
+			listeCommande.Supprimer();
+		}
 	}
 }
 

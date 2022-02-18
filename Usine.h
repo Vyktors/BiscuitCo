@@ -13,10 +13,19 @@ using namespace std;
 class Usine {
 private:
 	Liste<Client> listeClient;
-	Liste<Commande> listeCommande;
+	Liste<Paquet> listePaquet;
+
+
 public :
 	Usine();	
 
-	void ajouterClient(Client _client);
-
+	void ajouterClient(const Client& _client);
+	void afficherClients();
+	void afficherClient(string);
+	bool checkClient(string);
+	void ajouterCommandeToClient(string nomCli, const Commande&);
+	void ajouterPaquet(Paquet&);
+	void afficherPaquetPopulaire();
+	void supprimerClient(string);
+	void supprimerCommandesAvecClient(string);
 };

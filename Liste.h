@@ -7,21 +7,21 @@ template<typename TElement>
 class Liste {
 public:
 	Liste(); // Constructeur
-	Liste<TElement> &operator=(const Liste<TElement>& copied);
-
-
+	Liste(const Liste<TElement>&); //Constructeur par copie
 	~Liste(); // Destructeur
+
+	Liste<TElement>& operator=(const Liste<TElement>& copied);
 	void ViderListe(); // Vide la liste
 	void Inserer(const TElement&); // insère un élément à la position courante
 	void InsererQueue(const TElement&); // insère un élément à la fin de la liste
-	TElement Supprimer(); // Supprime et retourne l'élément à la position courante
+	void Supprimer(); // Supprime et retourne l'élément à la position courante
 	void FixerTete(); // met la position courante à la tête de la liste
 	void Precedent(); // Déplace la position courante à la position précédente
 	void Suivant(); // Déplace la position courante à la position suivante
 	int Longueur() const; // retourne la longueur courante de la liste
 	void FixerPosition(const int); // met position courante à position donnée
 	void FixerValeur(const TElement&); // met à jour la valeur à la position courante
-	TElement ValeurCourante() const;//retourne la valeur d'élément à la position courante.
+	TElement& ValeurCourante() const;//retourne la valeur d'élément à la position courante.
 	bool ListeVide(); // retourne vrai si la liste est vide
 	bool EstDansListe() const; // retourne vrai si position courante est dans la liste
 	bool Trouver(const TElement&);// recherche une valeurs dans la
@@ -39,23 +39,32 @@ private:
 template<typename TElement> inline
 Liste<TElement>::Liste()
 {
-	cout << "Creation Liste sans paramètre" << endl;
+	//cout << "creation de liste " << endl;
 	Queue = Tete = Courant = new Noeud<TElement>(); // crée le Noeud entête
+}
+
+template<typename TElement>
+inline Liste<TElement>::Liste(const Liste<TElement>& copied)
+{
+	//cout << "Constructeur par copie" << endl;
+	Queue = Tete = Courant = new Noeud<TElement>();
+	Noeud<TElement>* courantTmp = copied.Tete;
+	while (courantTmp->Suivant != nullptr) {
+		this->InsererQueue(courantTmp->Suivant->info);
+		courantTmp = courantTmp->Suivant;
+	}
 }
 
 
 template<typename TElement> inline 
 Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied)
 {
-
-	cout << "Copie référence!!" << endl;
+	//cout << "passage" << endl;
 	Noeud<TElement>* courantTmp = copied.Tete;
 	while (courantTmp->Suivant != nullptr) {
 		this->InsererQueue(courantTmp->Suivant->info);
 		courantTmp = courantTmp->Suivant;
 	}
-	
-
 	return *this;
 }
 
@@ -63,7 +72,7 @@ Liste<TElement>& Liste<TElement>::operator=(const Liste<TElement>& copied)
 template<typename TElement> inline
 Liste<TElement>::~Liste()
 {
-	cout << "Destruction Liste" << endl;
+	//cout << "suppression de liste" << endl;
 	while (Tete != nullptr) {
 		Courant = Tete;
 		Tete = Tete->Suivant;
@@ -87,7 +96,6 @@ void Liste<TElement>::ViderListe()
 template<typename TElement>
 void Liste<TElement>::Inserer(const TElement& element)
 {
-
 	Courant->Suivant = new Noeud<TElement>(element, Courant->Suivant);
 	if (Queue == Courant)
 		Queue = Courant->Suivant; //l'élément est ajouté à la fin de la liste.
@@ -95,16 +103,16 @@ void Liste<TElement>::Inserer(const TElement& element)
 
 // supprime et retourne l'élément courant
 template<typename TElement>
-TElement Liste<TElement>::Supprimer()
+void Liste<TElement>::Supprimer()
 {
-	assert(EstDansListe());// Courant doit être une position valide sinon le programme se termine
-	TElement temp = Courant->Suivant->element; //Sauvegarde de l'élément courant
-	Noeud<TElement> * ptemp = Courant->Suivant; // Sauvegarde du pointeur du Noeud Courant
-	Courant->Suivant = ptemp->Suivant; // suppression de l'élément
-	if (Queue == ptemp)
-		Queue = Courant; // C'est le dernier élément supprimé, mise à jour de Queue
-	delete ptemp;
-	return temp;
+	if (EstDansListe()) { // Courant doit être une position valide sinon le programme se termine
+		TElement temp = Courant->Suivant->info; //Sauvegarde de l'élément courant
+		Noeud<TElement>* ptemp = Courant->Suivant; // Sauvegarde du pointeur du Noeud Courant
+		Courant->Suivant = ptemp->Suivant; // suppression de l'élément
+		if (Queue == ptemp)
+			Queue = Courant; // C'est le dernier élément supprimé, mise à jour de Queue
+		delete ptemp;
+	}	
 }
 
 // insère en fin de liste
@@ -164,12 +172,13 @@ void Liste<TElement>::FixerValeur(const TElement& valeur) {
 }
 
 template<typename TElement>
-TElement Liste<TElement>::ValeurCourante() const {
+TElement& Liste<TElement>::ValeurCourante() const {
+	return Courant->Suivant->info;
+	/*
 	if (EstDansListe()) {
 		return Courant->Suivant->info;
 	}	
-	
-	return TElement();
+	return TElement();*/
 }
 
 template<typename TElement>

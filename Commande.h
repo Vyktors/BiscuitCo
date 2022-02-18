@@ -17,6 +17,8 @@ class Commande {
 		Commande(string _client_source, string _client_destinataire);
 		~Commande();
 
-		void ajouterPaquet(Paquet& _paquet);
+		void ajouterPaquet(const Paquet& _paquet);
 		void afficher();
+		string getCliSource();
+		string getCliDest();
 };

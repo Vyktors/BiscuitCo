@@ -1,27 +1,41 @@
 #include "Paquet.h"
-#include "TypeBiscuit.h"
 
 Paquet::Paquet()
 {
-	cout << "Creation paquet sans paramètre" << endl;
 	quantite = 0; 
 }
 
-Paquet::Paquet(const TypeBiscuit& pTypeBiscuit, int _quantite)
+Paquet::Paquet(string _biscuit, int _quantite)
 {
-	cout << "Creation paquet avec paramètre" << pTypeBiscuit.nom << " " << _quantite  << endl;
-	biscuit = pTypeBiscuit;
+	biscuit = _biscuit;
 	quantite = _quantite;
 }
 
 Paquet::~Paquet()
 {
-	cout << "Destruction Paquet" << endl;
+
 }
 
 string Paquet::afficher()
 {
-	string s = "Paquet : " + biscuit.nom + " " + to_string(quantite);
+	string s = "Paquet : " + biscuit + " " + to_string(quantite);
 	return s;
 }
 
+void Paquet::ajouterQt(int nbr) {
+	quantite = quantite + nbr;
+}
+
+void Paquet::setQt(int nbr) {
+	quantite = nbr;
+}
+
+int Paquet::getQt()
+{
+	return quantite;
+}
+
+string Paquet::getNom()
+{
+	return biscuit;
+}

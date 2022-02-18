@@ -143,20 +143,14 @@
     <ClInclude Include="Commande.h" />
     <ClInclude Include="Liste.h" />
     <ClInclude Include="Noeud.h" />
-    <ClInclude Include="OuvertureFichier.h" />
     <ClInclude Include="Paquet.h" />
-    <ClInclude Include="TypeBiscuit.h" />
     <ClInclude Include="Usine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Commande.cpp" />
-    <ClCompile Include="Liste.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Noeud.cpp" />
-    <ClCompile Include="OuvertureFichier.cpp" />
     <ClCompile Include="Paquet.cpp" />
-    <ClCompile Include="TypeBiscuit.cpp" />
     <ClCompile Include="Usine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

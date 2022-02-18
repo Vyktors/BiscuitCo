@@ -18,13 +18,11 @@ public:
 
 template<typename TType> inline
 Noeud<TType>::Noeud() {
-	cout << "Creation Noeud sans paramètre" << endl;
 	Suivant = nullptr;
 }
 
 template<typename TType> inline
 Noeud<TType>::Noeud(const TType& _info, Noeud<TType>* suiv) {
-	cout << "Creation Noeud avec paramètres" << endl;
 	info = _info;
 	Suivant = suiv;
 }
