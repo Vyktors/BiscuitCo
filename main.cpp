@@ -1,3 +1,19 @@
+/*                 Présentation du Devoir 1                     */
+/*--------------------------------------------------------------*/
+/* Réalisé par :   Mathieu Victor Guérin                        */
+/*                 Sophie Lalancette                            */
+/* -------------------------------------------------------------*/
+/* Date de remise : 18 mars 2022                                */
+/*--------------------------------------------------------------*/
+/* Objectif  : Dans ce code, il sera possible de lire des       */
+/*             fichier textes. Une liste de clients et de       */
+/*             commandes seront sauvegarder. Le programme va    */
+/*             ensuite faire des modification au données en     */
+/*             fonction des altercation demander. Pour finir le */
+/*             va enregistré les modifications en les sortant en*/
+/*             fichier texte.                                   */
+/*--------------------------------------------------------------*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
