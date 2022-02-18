@@ -20,7 +20,7 @@ Commande::~Commande()
 
 }
 
-void Commande::ajouterPaquet(Paquet& _paquet)
+void Commande::ajouterPaquet(const Paquet& _paquet)
 {
 	listePaquet.InsererQueue(_paquet);
 }
@@ -31,6 +31,16 @@ void Commande::afficher()
 	{
 		cout << listePaquet.ValeurCourante().afficher() << endl;
 	}
+}
+
+string Commande::getCliSource()
+{
+	return client_source;
+}
+
+string Commande::getCliDest()
+{
+	return client_destinataire;
 }
 
 

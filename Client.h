@@ -20,7 +20,8 @@ using namespace std;
 		Client(string _nom_client, int _numero, string _rue);
 		~Client();
 
-		void ajouterCommande(Commande& _commande);
+		void ajouterCommande(const Commande& _commande);
 		void afficher();
+		void supprimerCommandes(string);
 		string nom();
 };
