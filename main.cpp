@@ -1,3 +1,19 @@
+/*                 Présentation du Devoir 1                     */
+/*--------------------------------------------------------------*/
+/* Réalisé par :   Mathieu Victor Guérin                        */
+/*                 Sophie Lalancette                            */
+/* -------------------------------------------------------------*/
+/* Date de remise : 18 mars 2022                                */
+/*--------------------------------------------------------------*/
+/* Objectif  : Dans ce code, il sera possible de lire des       */
+/*             fichier textes. Une liste de clients et de       */
+/*             commandes seront sauvegarder. Le programme va    */
+/*             ensuite faire des modification au données en     */
+/*             fonction des altercation demander. Pour finir le */
+/*             va enregistré les modifications en les sortant en*/
+/*             fichier texte.                                   */
+/*--------------------------------------------------------------*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -16,6 +32,8 @@ void ajouterClient(string);
 void ajouterCommande(string);
 void afficherCommande(string);
 void ouvrir(string);
+void ouvrirClient(string _nomFichierClient);
+void ouvrirCommande(string _nomFichierClient);
 void enregistrer(string);
 
 int main()
@@ -26,62 +44,51 @@ int main()
 		cout << "Entrez une operation : ";
 		getline(cin, instruction);
 		gereChoix(instruction);
+		cout << endl;
 	}
 	system("pause");
 
 	return 0;
 }
 
+// Action que le programme doit faire en fonction des actions du fichier texte des opérations
 void gereChoix(string s)
 {
 	char operation = s.substr(0, s.find(" "))[0];
 	s.erase(0, 2);
 	switch (operation)
 	{
-	case '+':
-		cout << "Ajouter un client C habitant a l'adresse A et au numero N" << endl;
-		cout << "--------------" << endl;
+	case '+': //Ajouter un client C habitant a l'adresse A et au numero N
 		ajouterClient(s);
 		break;
-	case '-':
-		cout << "Supprimer un client X ainsi que toutes ses commandes associees de la liste" << endl;
-		cout << "--------------" << endl;
+	case '-'://Supprimer un client X ainsi que toutes ses commandes associees de la liste
 		usine.supprimerClient(s);
 		break;
-	case '=':
-		cout << "Ajouter une commande du client X au client Y suivie des types B de biscuits et de leur quantite X, & indique la fin de la commande" << endl;
-		cout << "--------------" << endl;
+	case '='://Ajouter une commande du client X au client Y suivie des types B de biscuits et de leur quantite X, & indique la fin de la commande
 		ajouterCommande(s);
 		break;
-	case '?':
-		cout << "Afficher les commandes faites par un client X" << endl;
-		cout << "--------------" << endl;
+	case '?'://Afficher les commandes faites par un client X
 		afficherCommande(s);
 		break;
-	case '$':
-		cout << "Afficher le type de biscuit le plus populaire et le montant total reçu pour ce dernier" << endl;
-		cout << "--------------" << endl;
+	case '$'://Afficher le type de biscuit le plus populaire et le montant total reçu pour ce dernier
 		usine.afficherPaquetPopulaire();
 		break;
-	case 'O':
-		cout << "ouvre et charge les fichiers ""CLIENTS"" et ""COMMANDES""" << endl;
-		cout << "--------------" << endl;
+	case 'O'://ouvre et charge les fichiers ""CLIENTS"" et ""COMMANDES"
 		ouvrir(s);
 		break;
-	case 'S':
-		cout << "enregistre dans les fichiers ""CLIENTS"" et "" COMMANDES""" << endl;
-		cout << "--------------" << endl;
+	case 'S'://enregistre dans les fichiers ""CLIENTS"" et "" COMMANDES"
+
 		break;
-	case 'X':
-		cout << "Afficher tous les clients" << endl;
-		cout << "--------------" << endl;
+
+	case 'X'://Afficher tous les clients
 		usine.afficherClients();
 		break;
 	default:
+		cout << "Ceci n'est pas une commande, voir commande 'help' pour plus d'information" << endl;
 		break;
 	}
 }
-
+//Fonction qui vérifie si le client existe dans la liste et s'il n'existe pas ajout de celui-ci
 void ajouterClient(string s) {
 	size_t pos = 0;
 	string token, nom, addr;
@@ -94,7 +101,7 @@ void ajouterClient(string s) {
 		switch (i)
 		{
 		case 0:
-			nom = token;
+			nom = token;			
 			break;
 		case 1:
 			try {
@@ -113,9 +120,17 @@ void ajouterClient(string s) {
 		}
 		s.erase(0, pos + 1);		
 	}
-	usine.ajouterClient(Client(nom, no, addr));
+	if (usine.checkClient(nom)) {
+		cout << "Client deja present" << endl;
+	}
+	else {
+		usine.ajouterClient(Client(nom, no, addr));
+		cout << nom << " ajoute(e) a la liste de client!" << endl;
+	}
+	
 }
 
+// Fonction qui ajoute une commande passer par un client qui existe dans la liste
 void ajouterCommande(string s) {
 	
 	size_t pos = 0;
@@ -168,15 +183,17 @@ void ajouterCommande(string s) {
 	
 }
 
+// Fonction qui affiche un client de la liste
 void afficherCommande(string s) {
 	
 	usine.afficherClient(s);
 
 }
 
+// Ouverture des fichiers textes et lectures de ceux-ci
 void ouvrir(string s) {
 	size_t pos = 0;
-	string token, nomFichierClient, nomFichierCommande;
+	string token, nomFichierClient ="", nomFichierCommande = "";
 	int no;
 	for (size_t i = 0; i < 2; i++)
 	{
@@ -197,6 +214,68 @@ void ouvrir(string s) {
 		s.erase(0, pos + 1);
 	}
 
+	ouvrirClient(nomFichierClient);
+	ouvrirCommande(nomFichierCommande);
+}
+
+void ouvrirClient(string _nomFichierClient) {
+	ifstream entree;
+	entree.open(_nomFichierClient, ios::in);
+	if (entree)
+	{
+		string op = "", s;
+		int mod = 0;
+		
+		while (!entree.eof()) {
+			
+			entree >> s;
+			if (mod % 3 == 0) {
+				op = s;
+			}
+			else {
+				op = op + " " + s;
+			}
+			
+			if (mod % 3 == 2) {
+				ajouterClient(op);
+			}
+			mod++;
+		}
+	}
+	else {
+		cout << "pas trouver de fichier avec ce nom " << _nomFichierClient << endl;
+	}
+	entree.close();
+}
 
 
+void ouvrirCommande(string _nomFichierCommande) {
+	ifstream entree;
+	entree.open(_nomFichierCommande, ios::in);
+	if (entree)
+	{
+		string op = "", s;
+		bool first = true;
+
+		while (!entree.eof()) {
+			entree >> s; 
+			if (s == "&") { //Termine une commande
+				op = op + " " + s;
+				ajouterCommande(op);
+				first = true;
+			}
+			else {
+				if (first) {
+					op = s;
+					first = false;
+				}
+				else {
+					op = op + " " + s;
+				}
+			}
+		}
+	}
+	else {
+		cout << "pas trouver de fichier avec ce nom " << _nomFichierCommande << endl;
+	}
 }

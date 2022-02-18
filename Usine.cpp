@@ -27,7 +27,7 @@ void Usine::afficherClients()
 	for (listeClient.FixerTete(); listeClient.EstDansListe(); listeClient.Suivant())
 	{
 		listeClient.ValeurCourante().afficher();
-		cout << "--------------" << endl;
+		cout << endl << endl << endl;
 	}
 }
 

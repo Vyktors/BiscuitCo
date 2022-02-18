@@ -16,7 +16,7 @@ public:
 	Paquet(string _biscuit, int _quantite);
 	~Paquet();
 
-	string afficher();
+	void afficher();
 	void setQt(int nbr);
 	void ajouterQt(int nbr);
 	int getQt();
