@@ -1,3 +1,19 @@
+/*                 Présentation du Devoir 1                     */
+/*--------------------------------------------------------------*/
+/* Réalisé par :   Mathieu Victor Guérin                        */
+/*                 Sophie Lalancette                            */
+/* -------------------------------------------------------------*/
+/* Date de remise : 18 mars 2022                                */
+/*--------------------------------------------------------------*/
+/* Objectif  : Dans ce code, il sera possible de lire des       */
+/*             fichier textes. Une liste de clients et de       */
+/*             commandes seront sauvegarder. Le programme va    */
+/*             ensuite faire des modification au données en     */
+/*             fonction des altercation demander. Pour finir le */
+/*             va enregistré les modifications en les sortant en*/
+/*             fichier texte.                                   */
+/*--------------------------------------------------------------*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -35,7 +51,8 @@ int main()
 	return 0;
 }
 
-void gereChoix(string s) 
+// Action que le programme doit faire en fonction des actions du fichier texte des opérations
+void gereChoix(string s)
 {
 	char operation = s.substr(0, s.find(" "))[0];
 	s.erase(0, 2);
@@ -71,7 +88,7 @@ void gereChoix(string s)
 		break;
 	}
 }
-
+//Fonction qui vérifie si le client existe dans la liste et s'il n'existe pas ajout de celui-ci
 void ajouterClient(string s) {
 	size_t pos = 0;
 	string token, nom, addr;
@@ -113,6 +130,7 @@ void ajouterClient(string s) {
 	
 }
 
+// Fonction qui ajoute une commande passer par un client qui existe dans la liste
 void ajouterCommande(string s) {
 	
 	size_t pos = 0;
@@ -165,12 +183,14 @@ void ajouterCommande(string s) {
 	
 }
 
+// Fonction qui affiche un client de la liste
 void afficherCommande(string s) {
 	
 	usine.afficherClient(s);
 
 }
 
+// Ouverture des fichiers textes et lectures de ceux-ci
 void ouvrir(string s) {
 	size_t pos = 0;
 	string token, nomFichierClient ="", nomFichierCommande = "";
